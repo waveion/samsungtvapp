@@ -1,0 +1,243 @@
+  .player-overlay-root {
+    position: absolute;
+    inset: 0;
+    display: block; /* flex not needed here */
+    pointer-events: none;
+    --overlay-height: 40%;
+    /* Pull content further up from the very bottom while still respecting safe areas */
+    --overlay-bottom-pad: max(96px, calc(env(safe-area-inset-bottom, 0px) + 90px));
+    z-index: 50; /* keep this higher than the video */
+  }
+  
+  .player-overlay-bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--overlay-height);
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.0) 0%,
+      rgba(0, 0, 0, 0.9) 40%,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+    z-index: 1; /* under content */
+  }
+  
+  .player-overlay-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0; /* bottom anchored */
+    padding: 0 24px var(--overlay-bottom-pad) 24px;
+    box-sizing: border-box;
+    display: block; /* grid wrapper handles layout */
+    z-index: 2; /* above gradient */
+  }
+  
+  /* ==== GRID ROW (logo | info | options | banner) ==== */
+  .overlay-grid {
+    --logo-w: clamp(130px, 9vw, 200px);
+    --banner-w: clamp(260px, 24vw, 400px);
+    --col-gap: clamp(14px, 1.8vw, 28px);
+  
+    display: grid;
+    grid-template-columns: var(--logo-w) 1fr auto var(--banner-w);
+    grid-template-areas: "logo info options banner";
+    align-items: start;
+    column-gap: var(--col-gap);
+  }
+  
+  /* Keep interactive bits clickable */
+  .logo-card,
+  .options-row,
+  .banner-card { pointer-events: auto; }
+  
+  .logo-card {
+    grid-area: logo;
+    width: clamp(96px, 8vw, 180px);
+    height: clamp(96px, 8vw, 180px);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  
+  .logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 6px;
+  }
+  
+  .info-col {
+    grid-area: info;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+    flex: 1;
+    align-self: flex-start;
+    min-width: 0; /* allow ellipsis */
+  }
+  
+  /* Channel line (number : name) */
+  .channel-line {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: clamp(18px, 1.8vw, 32px);
+  }
+  .channel-no   { font-size: clamp(20px, 2vw, 36px); font-weight: 700; }
+  .sep          { opacity: 0.9; }
+  .channel-title{ font-size: clamp(18px, 1.8vw, 32px); font-weight: 600; }
+  
+  /* Program title directly under channel line */
+  .program-title {
+    color: #fff;
+  font-size: clamp(32px, 3vw, 56px);
+    margin-top: 10px;
+    /* enforce left alignment with the channel line */
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Next program directly under program title */
+  .next-program-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    /* Extra space below time row */
+    margin-top: 18px;
+  }
+  .next-text { font-size: clamp(20px, 1.8vw, 30px); }
+  
+  /* Timing + progress (stays in same column) */
+  .time-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    /* Extra space below program title */
+    margin-top: 18px;
+    color: #d0d0d0;
+  }
+  
+  .time-window { font-size: clamp(18px, 1.5vw, 26px); color: #cfcfcf; }
+  .divider     { width: 1px; height: 20px; background: rgba(255,255,255,0.7); display: inline-block; }
+  .left-text   { font-size: clamp(18px, 1.5vw, 26px); color: #fff; }
+  
+  .progress {
+    width: clamp(130px, 10vw, 260px);
+    height: clamp(3px, 0.4vw, 6px);
+    background: #333;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-left: 8px;
+  }
+  .progress-fill { height: 100%; background: #49FEDD; }
+  
+  /* Options column */
+  .options-row {
+    grid-area: options;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    margin-right: 16px;
+    white-space: nowrap;
+    align-self: flex-start;
+  }
+  .opt-icon    { color: #fff; }
+  .opt-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.7); display: inline-block; }
+  .opt-label   { font-size: clamp(18px, 1.5vw, 26px); color: #fff; opacity: 0.9; }
+  .opt-btn     { background: transparent; border: none; color: #fff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 2px; }
+  
+  /* Banner card on the right */
+  .banner-card {
+    grid-area: banner;
+    width: clamp(140px, 16vw, 280px);
+    height: clamp(90px, 9vw, 160px);
+    border-radius: 6px;
+    overflow: hidden;
+    align-self: flex-start;
+    justify-self: end;
+    background: #fff;
+  }
+  
+  /* When showing a logo as fallback, make the banner area shorter */
+  .banner-card.logo-height { height: clamp(70px, 7vw, 120px); }
+  
+  .banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Logo fallback should not be cropped; also reduce visual size */
+  .banner-img.banner-logo {
+    object-fit: contain;
+    padding: clamp(8px, 1vw, 16px);
+    background: #ffffff;
+  }
+  
+  .banner-fallback {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+  }
+  /* 1) Make the left side tighter */
+.player-overlay-content{
+    padding: 0 16px var(--overlay-bottom-pad) 16px; /* 24px → 16px */
+  }
+  
+/* keep a compact but safe grid spacing */
+.overlay-grid{
+    /* bump logo size so channel (Panmetro) logo appears larger in the overlay */
+    --logo-w: clamp(200px, 14vw, 340px);
+    --col-gap: clamp(10px, 1.2vw, 18px);  /* space between logo and text rail */
+  }
+  
+/* make the logo card follow --logo-w so grid + box match */
+.logo-card{
+    width: var(--logo-w) !important;
+    height: var(--logo-w) !important;
+}
+  
+.info-col{
+    margin-left: 0 !important;                          /* no overlap */
+    padding-left: clamp(6px, 0.6vw, 12px) !important;   /* tiny space before text starts */
+    }
+  
+  /* 3) Force the program title to align left and stop any auto-centering */
+  .program-title{
+    align-self: flex-start;           /* no centering inside the flex column */
+    margin: 10px 0 0 0;               /* kill any auto side margins */
+    text-align: left !important;
+  }
+  
+ /* keep everything on the same left rail */
+.channel-line,
+.program-title,
+.next-program-row,
+.time-progress-row{
+  align-self: flex-start;
+  text-align: left;
+}
+  
+  /* Optional: on very large screens, keep it compact */
+  @media (min-width: 1800px){
+    .overlay-grid{
+      --logo-w: 160px;
+      --col-gap: 16px;
+    }
+  }
+  

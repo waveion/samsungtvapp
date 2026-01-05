@@ -1,0 +1,1483 @@
+/* Live Container - Main EPG Screen */
+.live-container {
+    min-height: 100vh;
+    background: #161D25;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    outline: none;
+    padding-left: 0;
+    overflow: hidden; /* prevent scrollbars on container */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.live-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* EPG Screen Layout */
+.epg-screen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #161D25;
+    overflow: hidden; /* prevent scrollbars */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.epg-screen::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.epg-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: #2A3139;
+    padding-top: 238px; /* Account for fixed filters: 48px (category) + 110px (language) + 80px (header) */
+    overflow: hidden; /* prevent scrollbars */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.epg-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Category Menu */
+.category-menu {
+    height: 48px;
+    background: #161D25;
+    border-radius: 0; /* remove rounded corners to avoid visible seams on TV engines */
+    border: none;
+    box-shadow: none;
+    background-clip: padding-box;
+    margin-bottom: 0;
+    position: fixed;
+    top: 0;
+    left: 80px; /* Account for sidebar width */
+    right: 0;
+    width: calc(100% - 80px);
+    z-index: 100;
+    overflow: hidden; /* prevent inner edges from showing at the corners/right */
+}
+
+/* Language Menu (same styling as category menu) */
+.language-menu {
+    height: 110px;
+    background: #161D25;
+    border-radius: 0; /* remove rounded corners to avoid visible seams on TV engines */
+    border: none;
+    box-shadow: none;
+    background-clip: padding-box;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: fixed;
+    top: 48px; /* Position below category menu */
+    left: 80px; /* Account for sidebar width */
+    right: 0;
+    width: calc(100% - 80px);
+    z-index: 100;
+    overflow: hidden; /* prevent inner edges from showing at the corners/right */
+}
+
+/* Language pill buttons styled like Compose code (rounded 30dp, focus/selected states) */
+.language-item {
+    background: transparent;
+    color: white;
+    border: 2px solid transparent;
+    padding: 18px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+    font-size: 26px;
+    font-weight: 500;
+    min-width: 156px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.language-item.selected {
+    background: rgba(73, 254, 221, 0.102); /* Color(0x1A49FEDD) */
+    color: #FFFFFF;
+}
+
+.language-item.focused {
+    border: 2px solid #49FEDD; /* 2dp border like Kotlin */
+    border-color: #49FEDD; /* Explicit border color for smooth transition */
+    background: rgba(73, 254, 221, 0.102); /* Color(0x1A49FEDD) - semi-transparent cyan */
+    background-color: rgba(73, 254, 221, 0.102); /* Explicit background for smooth transition */
+    box-shadow: none; /* no glow */
+    transform: none;
+    border-radius: 30px; /* Match language item border shape */
+}
+
+.language-item.focused.selected {
+    border: 2px solid #49FEDD;
+    border-color: #49FEDD;
+    background: rgba(73, 254, 221, 0.102);
+    background-color: rgba(73, 254, 221, 0.102);
+    border-radius: 30px; /* Match language item border shape */
+}
+
+.category-menu-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 60px;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden; /* Prevent vertical scrolling in menu container */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: auto; /* Instant scrolling for fast navigation - controlled by JS */
+    /* Prevent menu scrolling from affecting page/EPG */
+    position: relative;
+    isolation: isolate;
+}
+
+.category-menu-container::-webkit-scrollbar {
+    display: none;
+}
+
+.language-menu .category-menu-container {
+    gap: 0;
+}
+
+.category-item {
+    background: transparent;
+    color: white;
+    border: 2px solid transparent;
+    padding: 4px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+    font-size: 15px;
+    font-weight: 400;
+    min-width: 96px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    margin-right: 30px;
+}
+
+.category-menu-container .category-item:last-child {
+    margin-right: 0;
+}
+
+.language-menu .category-item {
+    margin-right: 96px;
+}
+
+.language-menu .category-item:last-child {
+    margin-right: 0;
+}
+.category-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Remove default browser focus ring to avoid orange/blue glow */
+.category-item:focus,
+.language-item:focus {
+    outline: none;
+    /* Prevent focus from causing page scroll */
+    scroll-margin: 0;
+}
+
+/* Prevent page/EPG scrolling when menu items are focused */
+.category-menu,
+.language-menu {
+    /* Keep menu container isolated from page scroll */
+    /* Note: position is now fixed, defined above */
+    z-index: 100;
+    /* Prevent menu scrolling from affecting parent containers */
+    contain: layout style;
+}
+
+.category-item.selected {
+    background: rgba(73, 254, 221, 0.102); /* Color(0x1A49FEDD) */
+    color: #FFFFFF;
+}
+
+.category-item.focused {
+    border: 2px solid #49FEDD; /* 2dp border like Kotlin */
+    border-color: #49FEDD; /* Explicit border color for smooth transition */
+    background: rgba(73, 254, 221, 0.102); /* Color(0x1A49FEDD) - semi-transparent cyan */
+    background-color: rgba(73, 254, 221, 0.102); /* Explicit background for smooth transition */
+    box-shadow: none; /* no glow */
+    padding: 4px 10px; /* keep tighter padding */
+    border-radius: 4px; /* Match RoundedCornerShape(4.dp) */
+}
+
+.category-item.focused.selected {
+    border: 2px solid #49FEDD;
+    border-color: #49FEDD;
+    background: rgba(73, 254, 221, 0.102);
+    background-color: rgba(73, 254, 221, 0.102);
+}
+
+/* EPG Header */
+.epg-header {
+    display: flex;
+    height: 80px;
+    background: #161D25;
+    align-items: center;
+    gap: 12px;
+    position: fixed;
+    top: 158px; /* Position below filters: 48px (category) + 110px (language) */
+    left: 80px; /* Account for sidebar width */
+    right: 0;
+    width: calc(100% - 80px);
+    z-index: 99;
+}
+
+.left-panel-header {
+    width: 180px;
+    background: #161D25;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.time-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* decreased from 18px */
+    width: 100%;
+    padding: 0 16px;
+}
+
+.time-icon {
+    width: 16px; /* match time-slot font size */
+    height: 16px; /* match time-slot font size */
+    color: #666666;
+    font-size: 16px; /* match time-slot font size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.current-time {
+    color: #B5B5B5;
+    font-size: 16px; /* match time-slot font size */
+    font-weight: 600;
+    text-align: center;
+    width: 180px;
+}
+
+.time-header {
+    flex: 1;
+    background: #161D25;
+    display: flex;
+    align-items: center;
+}
+
+.time-slots {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    gap: 160px;
+    padding-left: 0;
+}
+
+.time-slot {
+    width: 120px;
+    color: #B5B5B5;
+    font-size: 16px; /* reduced from 22px */
+    font-weight: 600;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* EPG Content Inner */
+.epg-content-inner {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: #2A3139;
+    overflow: hidden;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.epg-content-inner::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* EPG Body */
+.epg-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: #2A3139;
+    overflow: hidden;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    position: relative;
+}
+
+.epg-body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* EPG Channels */
+.epg-channels {
+    flex: 1;
+    background: #2A3139;
+    overflow-y: auto;
+    overflow-x: visible; /* allow indicator dot to be visible */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* IE/Edge */
+    position: relative; /* needed for timeline indicator positioning */
+    padding-top: 14px; /* space for indicator dot (12px radius + 2px buffer) */
+    scroll-behavior: smooth; /* Enable smooth scrolling */
+    scroll-padding-top: 20px; /* Add padding to ensure focused element is visible */
+    scroll-padding-bottom: 20px; /* Add padding to ensure focused element is visible */
+}
+
+/* Removed previous ::before/::after right-edge masks on header/language/category
+   because they caused a visible vertical strip on some TV engines when content was sparse. */
+
+.epg-channels::-webkit-scrollbar {
+    display: none;
+}
+html, body {
+    background: #161D25; /* match your app background */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* prevent accidental horizontal scroll */
+    overflow-y: hidden; /* prevent vertical scroll on body */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.live-container,
+.epg-screen,
+.epg-content,
+.epg-channels,
+.program-row {
+    background-color: #2A3139; /* fill the whole area */
+    box-sizing: border-box;
+}
+
+.epg-channel-row {
+    display: flex;
+    background: #2A3139; /* unify row bg with grid to avoid seam */
+    height: 45px; /* further reduced height for program rows */
+    margin-bottom: 20px; /* extra space between channel rows */
+    align-items: center;
+    border-radius: 6px;
+    border-bottom: 1px solid #161D25;
+    gap: 12px;
+    scroll-margin-top: 20px; /* Ensure focused row has space when scrolling */
+    scroll-margin-bottom: 20px; /* Ensure focused row has space when scrolling */
+}
+
+/* Channel Info */
+.channel-info {
+    width: 180px;
+    background: #2A3139; /* same as grid to kill contrast edge */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    position: relative;
+}
+
+/* Separator line after channel logo */
+.channel-info::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 10%;
+    bottom: 10%;
+    width: 1px;
+    background: #161D25;
+    opacity: 0.6;
+}
+
+.channel-number {
+    width: 50px;
+    height: 45px; /* match further reduced row height */
+    background: #2A3139; /* same as row */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px; /* base size; see media queries for TV breakpoints */
+    text-align: center;
+    font-weight: 600;
+}
+
+.channel-logo {
+    width: 140px;
+    height: 50px; /* a bit taller thumbnail in base layout */
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2A3139;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    top: 0px; /* Center the logo vertically */
+    box-sizing: border-box;
+}
+
+.channel-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* keep logos fully visible in the rectangle */
+    padding: 6px;
+}
+
+.channel-logo.focused {
+    background: rgba(73, 254, 221, 0.102); /* Color(0x1A49FEDD) - semi-transparent cyan */
+    border: 2px solid #49FEDD; /* 2dp border like Kotlin */
+    border-radius: 4px; /* Match RoundedCornerShape(4.dp) */
+    box-shadow: none; /* Remove glow for cleaner look */
+    z-index: 1;
+}
+
+.channel-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2A3139; /* match card bg to avoid white panel look */
+    color: #B5B5B5;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.program-row {
+    flex: 1;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    overflow-x: auto;   /* horizontal scroll only */
+    overflow-y: hidden; /* no vertical scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 0;
+    background: #2A3139;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.program-row::-webkit-scrollbar {
+    display: none;
+}
+
+.program-cell {
+    height: 45px; /* further reduced height to match row */
+    background: #2A3139;
+    border-radius: 6px;
+    margin-right: 6px; /* horizontal space between programmes */
+    border-left: 3px solid #161D25;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 180px;
+    flex-shrink: 0;
+    position: relative;
+    box-sizing: border-box;
+    overflow: visible; /* ensure focus outline isn't clipped */
+}
+
+/* remove left separator on the first program so no stray strip shows */
+.program-row .program-cell:first-child {
+    border-left: 0; /* keep separator off the first cell */
+}
+
+.program-cell:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.program-cell.focused {
+    border: 2px solid #49FEDD; /* 2dp border like Kotlin, all four sides */
+    background: rgba(73, 254, 221, 0.102); /* Color(0x1A49FEDD) - semi-transparent cyan */
+    box-shadow: none; /* Remove glow for cleaner look */
+    z-index: 1;
+    border-radius: 4px; /* Match RoundedCornerShape(4.dp) */
+}
+
+.program-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px; /* tighter padding to match reference */
+}
+
+/* Scope EPG title styling to EPG program cells only, so it does not affect Player overlay */
+.program-content .program-title {
+    color: white;
+    /* Increased/reset size for better readability on the EPG grid */
+    font-size: 28px;
+    text-align: center;
+    max-lines: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+/* Live Time Indicator */
+.live-time-indicator {
+    position: absolute;
+    top: 260px; /* start a little further down below the epg-header */
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.time-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #49FEDD;
+    left: 0;
+}
+
+.time-indicator-dot {
+    position: absolute;
+    top: 0;
+    left: -12px;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #49FEDD;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.indicator-icon {
+    color: #49FEDD;
+    font-size: 16px;
+}
+
+/* No Channels Message */
+.epg-no-channels {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: #2A3139;
+}
+
+.no-channels-message {
+    color: white;
+    font-size: 56px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Loading State */
+.live-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #161D25;
+    color: white;
+}
+
+.live-spinner {
+    width: 150px;
+    height: 150px;
+    border: 8px solid #333;
+    border-top: 8px solid #49FEDD;
+    border-radius: 50%;
+    animation: live-spin 1s linear infinite;
+    margin-bottom: 50px;
+}
+
+@keyframes live-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Focus Management */
+.live-container:focus {
+    outline: none;
+}
+
+/* Responsive Design */
+
+/* Ultra-wide 8K+ Screens (3840px+) */
+@media (min-width: 3840px) {
+    .live-container {
+        padding-left: 0;
+    }
+    
+    .category-menu {
+        height: 280px;
+    }
+    
+    .language-menu {
+        top: 280px;
+    }
+    
+    .category-item {
+        font-size: 56px;
+        min-width: 400px;
+        height: 220px;
+        padding: 60px 120px;
+    }
+    
+    .epg-header {
+        height: 220px;
+        position: fixed;
+        top: 390px; /* 280px (category) + 110px (language) */
+        left: 80px; /* Account for sidebar width */
+        right: 0;
+        width: calc(100% - 80px);
+        z-index: 99;
+    }
+    .live-time-indicator { top: 0; }
+    
+    .epg-content {
+        padding-top: 610px; /* 280px (category) + 110px (language) + 220px (header) */
+    }
+    
+    .left-panel-header {
+        width: 600px;
+        padding: 0 60px;
+    }
+    
+    .channel-info {
+        width: 600px;
+        position: relative;
+    }
+    
+    .channel-info::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        bottom: 10%;
+        width: 2px;
+        background: #161D25;
+        opacity: 0.6;
+    }
+    
+    .channel-number {
+        width: 180px;
+        height: 320px;
+        font-size: 44px; /* decreased from 52px */
+    }
+    
+    .channel-logo {
+        width: 380px;
+        height: 200px; /* slightly taller thumbnail on 8K */
+    }
+    
+    .epg-channel-row {
+        height: 180px; /* further reduced from 240px */
+        margin-bottom: 24px; /* extra vertical space between channel rows */
+        border-bottom: 3px solid #161D25;
+    }
+    
+    .program-cell {
+        height: 220px; /* further reduced from 300px */
+        min-width: 400px;
+    }
+    
+    .program-title {
+        font-size: 40px; /* reduced so programme labels feel lighter */
+    }
+    
+    .current-time {
+        font-size: 40px; /* match time-slot font size */
+    }
+    
+    .time-icon {
+        width: 40px; /* match time-slot font size */
+        height: 40px; /* match time-slot font size */
+        font-size: 40px; /* match time-slot font size */
+        color: #666666;
+    }
+    
+    .time-slot {
+        width: 250px;
+        font-size: 40px; /* reduced from 56px */
+    }
+    
+    .time-slots {
+        gap: 320px;
+    }
+}
+
+/* 4K Ultra HD Screens (2560px-3839px) */
+@media (min-width: 2560px) and (max-width: 3839px) {
+    .live-container {
+        padding-left: 0;
+    }
+    
+    .category-menu {
+        height: 240px;
+    }
+    
+    .language-menu {
+        top: 240px;
+    }
+    
+    .category-item {
+        font-size: 48px;
+        min-width: 350px;
+        height: 180px;
+        padding: 50px 100px;
+    }
+    
+    .epg-header {
+        height: 180px;
+        position: fixed;
+        top: 350px; /* 240px (category) + 110px (language) */
+        left: 80px; /* Account for sidebar width */
+        right: 0;
+        width: calc(100% - 80px);
+        z-index: 99;
+    }
+    .live-time-indicator { top: 0; }
+    
+    .epg-content {
+        padding-top: 530px; /* 240px (category) + 110px (language) + 180px (header) */
+    }
+    
+    .left-panel-header {
+        width: 500px;
+        padding: 0 50px;
+    }
+    
+    .channel-info {
+        width: 500px;
+        position: relative;
+    }
+    
+    .channel-info::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        bottom: 10%;
+        width: 2px;
+        background: #161D25;
+        opacity: 0.6;
+    }
+    
+    .channel-number {
+        width: 150px;
+        height: 280px;
+        font-size: 36px; /* decreased from 44px */
+    }
+    
+    .channel-logo {
+        width: 320px;
+        height: 160px; /* slightly taller thumbnail on 4K */
+    }
+    
+    .epg-channel-row {
+        height: 150px; /* further reduced from 200px */
+        margin-bottom: 24px; /* extra vertical space between channel rows */
+        border-bottom: 2px solid #161D25;
+    }
+    
+    .program-cell {
+        height: 190px; /* further reduced from 260px */
+        min-width: 360px;
+    }
+    
+    .program-title {
+        font-size: 36px; /* reduced so programme labels feel lighter */
+    }
+    
+    .current-time {
+        font-size: 34px; /* match time-slot font size */
+    }
+    
+    .time-icon {
+        width: 34px; /* match time-slot font size */
+        height: 34px; /* match time-slot font size */
+        font-size: 34px; /* match time-slot font size */
+        color: #666666;
+    }
+    
+    .time-slot {
+        width: 220px;
+        font-size: 34px; /* reduced from 48px */
+    }
+    
+    .time-slots {
+        gap: 280px;
+    }
+}
+
+/* Full HD Screens (1920px-2559px) */
+@media (min-width: 1920px) and (max-width: 2559px) {
+    .live-container {
+        padding-left: 0;
+    }
+    
+    .category-menu {
+        height: 180px;
+    }
+    
+    .language-menu {
+        top: 180px;
+    }
+    
+    .category-item {
+        font-size: 36px;
+        min-width: 250px;
+        height: 140px;
+        padding: 35px 70px;
+    }
+    
+    .epg-header {
+        height: 140px;
+        position: fixed;
+        top: 290px; /* 180px (category) + 110px (language) */
+        left: 80px; /* Account for sidebar width */
+        right: 0;
+        width: calc(100% - 80px);
+        z-index: 99;
+    }
+    .live-time-indicator { top: 0; }
+    
+    .epg-content {
+        padding-top: 430px; /* 180px (category) + 110px (language) + 140px (header) */
+    }
+    
+    .left-panel-header {
+    width: 350px;
+        padding: 0 35px;
+    }
+    
+    .channel-info {
+        width: 350px;
+        position: relative;
+    }
+    
+    .channel-info::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        bottom: 10%;
+        width: 2px;
+        background: #161D25;
+        opacity: 0.6;
+    }
+    
+    .channel-number {
+        width: 100px;
+        height: 200px;
+        font-size: 26px; /* decreased from 32px */
+    }
+    
+    .channel-logo {
+        width: 220px;
+        height: 115px; /* slightly taller thumbnail on Full HD */
+    }
+    
+    .epg-channel-row {
+        height: 105px; /* further reduced from 140px */
+        margin-bottom: 20px; /* extra vertical space between channel rows */
+        border-bottom: 2px solid #161D25;
+    }
+    
+    .program-cell {
+        height: 135px; /* further reduced from 180px */
+        min-width: 240px;
+    }
+    
+    .program-title {
+        font-size: 26px; /* reduced so programme labels feel lighter */
+    }
+    
+    .current-time {
+        font-size: 24px; /* match time-slot font size */
+    }
+    
+    .time-icon {
+        width: 24px; /* match time-slot font size */
+        height: 24px; /* match time-slot font size */
+        font-size: 24px; /* match time-slot font size */
+        color: #666666;
+    }
+    
+    .time-slot {
+        width: 150px;
+        font-size: 24px; /* reduced from 32px */
+    }
+    
+    .time-slots {
+        gap: 200px;
+    }
+}
+
+/* HD Screens (1366px-1919px) */
+@media (min-width: 1366px) and (max-width: 1919px) {
+    .live-container {
+        padding-left: 0;
+    }
+    
+    .category-menu {
+    height: 160px;
+    }
+    
+    .language-menu {
+        top: 160px;
+    }
+    
+    .category-item {
+        font-size: 32px;
+        min-width: 220px;
+        height: 120px;
+        padding: 30px 60px;
+    }
+    
+    .epg-header {
+        height: 120px;
+        position: fixed;
+        top: 270px; /* 160px (category) + 110px (language) */
+        left: 80px; /* Account for sidebar width */
+        right: 0;
+        width: calc(100% - 80px);
+        z-index: 99;
+    }
+    .live-time-indicator { top: 0; }
+    
+    .epg-content {
+        padding-top: 390px; /* 160px (category) + 110px (language) + 120px (header) */
+    }
+    
+    .left-panel-header {
+        width: 300px;
+        padding: 0 30px;
+    }
+    
+    .channel-info {
+        width: 300px;
+        position: relative;
+    }
+    
+    .channel-info::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        bottom: 10%;
+        width: 2px;
+        background: #161D25;
+        opacity: 0.6;
+    }
+    
+    .channel-number {
+        width: 90px;
+        height: 180px;
+        font-size: 22px; /* decreased from 28px */
+    }
+    
+    .channel-logo {
+        width: 200px;
+        height: 100px; /* slightly taller thumbnail on HD */
+    }
+    
+    .epg-channel-row {
+        height: 90px; /* further reduced from 120px */
+        margin-bottom: 20px; /* extra vertical space between channel rows */
+        border-bottom: 2px solid #161D25;
+    }
+    
+    .program-cell {
+        height: 140px; /* reduced from 200px */
+        min-width: 200px;
+    }
+    
+    .program-title {
+        font-size: 22px; /* reduced so programme labels feel lighter */
+    }
+    
+    .current-time {
+        font-size: 20px; /* match time-slot font size */
+    }
+    
+    .time-icon {
+        width: 20px; /* match time-slot font size */
+        height: 20px; /* match time-slot font size */
+        font-size: 20px; /* match time-slot font size */
+        color: #666666;
+    }
+    
+    .time-slot {
+        width: 135px;
+        font-size: 20px; /* reduced from 28px */
+    }
+    
+    .time-slots {
+        gap: 180px;
+    }
+}
+
+/* Standard TV Screens (1200px-1365px) */
+@media (min-width: 1200px) and (max-width: 1365px) {
+    .live-container {
+        padding-left: 0;
+    }
+    
+    .category-menu {
+        height: 140px;
+    }
+    
+    .language-menu {
+        top: 140px;
+    }
+    
+    .category-item {
+        font-size: 28px;
+        min-width: 200px;
+        height: 100px;
+        padding: 25px 50px;
+    }
+    
+    .epg-header {
+        height: 100px;
+        position: fixed;
+        top: 250px; /* 140px (category) + 110px (language) */
+        left: 80px; /* Account for sidebar width */
+        right: 0;
+        width: calc(100% - 80px);
+        z-index: 99;
+    }
+    .live-time-indicator { top: 0; }
+    
+    .epg-content {
+        padding-top: 350px; /* 140px (category) + 110px (language) + 100px (header) */
+    }
+    
+    .left-panel-header {
+        width: 250px;
+        padding: 0 25px;
+    }
+    
+    .channel-info {
+        width: 250px;
+        position: relative;
+    }
+    
+    .channel-info::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        bottom: 10%;
+        width: 1px;
+        background: #161D25;
+        opacity: 0.6;
+    }
+    
+    .channel-number {
+        width: 80px;
+        height: 160px;
+        font-size: 20px; /* decreased from 24px */
+    }
+    
+    .channel-logo {
+        width: 180px;
+        height: 85px; /* slightly taller thumbnail on standard TV */
+    }
+    
+    .epg-channel-row {
+        height: 100px; /* reduced from 160px */
+        margin-bottom: 18px; /* extra vertical space between channel rows */
+        border-bottom: 2px solid #161D25;
+    }
+    
+    .program-cell {
+        height: 120px; /* reduced from 180px */
+        min-width: 180px;
+    }
+    
+    .program-title {
+        font-size: 20px; /* reduced so programme labels feel lighter */
+    }
+    
+    .current-time {
+        font-size: 18px; /* match time-slot font size */
+    }
+    
+    .time-icon {
+        width: 18px; /* match time-slot font size */
+        height: 18px; /* match time-slot font size */
+        font-size: 18px; /* match time-slot font size */
+        color: #666666;
+    }
+    
+    .time-slot {
+        width: 120px;
+        font-size: 18px; /* reduced from 24px */
+    }
+    
+    .time-slots {
+        gap: 160px;
+    }
+}
+
+/* Tablet/Small TV Screens (768px-1199px) */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .live-container {
+        padding-left: 0;
+    }
+    
+    .category-menu {
+        height: 120px;
+    }
+    
+    .language-menu {
+        top: 120px;
+    }
+    
+    .category-item {
+        font-size: 24px;
+        min-width: 180px;
+        height: 80px;
+        padding: 20px 40px;
+    }
+    
+    .epg-header {
+        height: 80px;
+        position: fixed;
+        top: 230px; /* 120px (category) + 110px (language) */
+        left: 80px; /* Account for sidebar width */
+        right: 0;
+        width: calc(100% - 80px);
+        z-index: 99;
+    }
+    .live-time-indicator { top: 0; }
+    
+    .epg-content {
+        padding-top: 310px; /* 120px (category) + 110px (language) + 80px (header) */
+    }
+    
+    .left-panel-header {
+        width: 200px;
+        padding: 0 20px;
+    }
+    
+    .channel-info {
+        width: 200px;
+        position: relative;
+    }
+    
+    .channel-info::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        bottom: 10%;
+        width: 1px;
+        background: #161D25;
+        opacity: 0.6;
+    }
+    
+    .channel-number {
+        width: 60px;
+        height: 120px;
+        font-size: 16px; /* decreased from 20px */
+    }
+    
+    .channel-logo {
+        width: 130px;
+        height: 65px; /* slightly taller thumbnail on small TVs/tablets */
+    }
+    
+    .epg-channel-row {
+        height: 80px; /* reduced from 120px */
+        margin-bottom: 16px; /* extra vertical space between channel rows */
+        border-bottom: 1px solid #161D25;
+    }
+    
+    .program-cell {
+        height: 100px; /* reduced from 140px */
+        min-width: 140px;
+    }
+    
+    .program-title {
+        font-size: 18px; /* reduced so programme labels feel lighter */
+    }
+    
+    .current-time {
+        font-size: 14px; /* match time-slot font size */
+    }
+    
+    .time-icon {
+        width: 14px; /* match time-slot font size */
+        height: 14px; /* match time-slot font size */
+        font-size: 14px; /* match time-slot font size */
+        color: #666666;
+    }
+    
+    .time-slot {
+        width: 105px;
+        font-size: 14px; /* reduced from 18px */
+    }
+
+    .time-slots {
+        gap: 140px;
+    }
+}
+
+/* Mobile/Tablet Screens (480px-767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+    .live-container {
+        padding-left: 0;
+    }
+    
+    .category-menu {
+        height: 80px;
+        left: 70px; /* Account for sidebar width on mobile */
+        width: calc(100% - 70px);
+    }
+    
+    .language-menu {
+        top: 80px;
+        left: 70px; /* Account for sidebar width on mobile */
+        width: calc(100% - 70px);
+    }
+    
+    .category-item {
+        font-size: 18px;
+        min-width: 120px;
+        height: 60px;
+        padding: 12px 24px;
+    }
+
+    .epg-header {
+        height: 60px;
+        position: fixed;
+        top: 190px; /* 80px (category) + 110px (language) */
+        left: 70px; /* Account for sidebar width on mobile */
+        right: 0;
+        width: calc(100% - 70px);
+        z-index: 99;
+    }
+    .live-time-indicator { top: 0; }
+    
+    .epg-content {
+        padding-top: 250px; /* 80px (category) + 110px (language) + 60px (header) */
+    }
+
+    .left-panel-header {
+        width: 150px;
+        padding: 0 15px;
+    }
+
+    .channel-info {
+        width: 150px;
+        position: relative;
+    }
+    
+    .channel-info::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        bottom: 10%;
+        width: 1px;
+        background: #161D25;
+        opacity: 0.6;
+    }
+
+    .channel-number {
+        width: 50px;
+        height: 80px;
+        font-size: 14px; /* decreased from 16px */
+    }
+    
+    .channel-logo {
+        width: 100px;
+        height: 50px; /* slightly taller thumbnail on mobile/tablet */
+    }
+    
+    .epg-channel-row {
+        height: 60px; /* reduced from 80px */
+        margin-bottom: 14px; /* extra vertical space between channel rows */
+        border-bottom: 1px solid #161D25;
+    }
+    
+    .program-cell {
+        height: 80px; /* reduced from 100px */
+        min-width: 100px;
+    }
+    
+    .program-title {
+        font-size: 16px;
+    }
+    
+    .current-time {
+        font-size: 12px; /* match time-slot font size */
+    }
+    
+    .time-icon {
+        width: 12px; /* match time-slot font size */
+        height: 12px; /* match time-slot font size */
+        font-size: 12px; /* match time-slot font size */
+        color: #666666;
+    }
+    
+    .time-slot {
+        width: 90px;
+        font-size: 12px; /* reduced from 18px */
+    }
+    
+    .time-slots {
+        gap: 120px;
+    }
+}
+
+/* Small Mobile Screens (up to 479px) */
+@media (max-width: 479px) {
+    .live-container {
+        padding-left: 0;
+    }
+    
+    .category-menu {
+        height: 60px;
+        left: 70px; /* Account for sidebar width on mobile */
+        width: calc(100% - 70px);
+    }
+    
+    .language-menu {
+        top: 60px;
+        left: 70px; /* Account for sidebar width on mobile */
+        width: calc(100% - 70px);
+    }
+    
+    .epg-header {
+        height: 80px;
+        position: fixed;
+        top: 170px; /* 60px (category) + 110px (language) */
+        left: 70px; /* Account for sidebar width on mobile */
+        right: 0;
+        width: calc(100% - 70px);
+        z-index: 99;
+    }
+    
+    .epg-content {
+        padding-top: 250px; /* 60px (category) + 110px (language) + 80px (header) */
+    }
+    
+    .category-item {
+        font-size: 14px;
+        min-width: 80px;
+        height: 40px;
+        padding: 8px 16px;
+    }
+    
+    .category-menu-container {
+        gap: 0;
+    }
+
+    .category-menu .category-item {
+        margin-right: 20px;
+    }
+    
+    .left-panel-header {
+        width: 100px;
+        padding: 0 5px;
+    }
+    
+    .channel-info {
+        width: 100px;
+        position: relative;
+    }
+    
+    .channel-info::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        bottom: 10%;
+        width: 1px;
+        background: #161D25;
+        opacity: 0.6;
+    }
+    
+    .channel-number {
+        width: 40px;
+        height: 60px;
+        font-size: 10px; /* decreased from 12px */
+    }
+    
+    .channel-logo {
+        width: 60px;
+        height: 35px; /* slightly taller thumbnail on small mobile */
+    }
+    
+    .epg-channel-row {
+        height: 45px; /* reduced from 60px */
+        margin-bottom: 12px; /* extra vertical space between channel rows */
+        border-bottom: 1px solid #161D25;
+    }
+    
+    .program-cell {
+        height: 60px; /* reduced from 80px */
+        min-width: 80px;
+    }
+    
+    .program-title {
+        font-size: 12px;
+    }
+
+    .current-time {
+        font-size: 14px; /* match time-slot font size */
+    }
+
+    .time-icon {
+        width: 14px; /* match time-slot font size */
+        height: 14px; /* match time-slot font size */
+        font-size: 14px; /* match time-slot font size */
+        color: #666666;
+    }
+
+    .time-slot {
+        width: 75px;
+        font-size: 14px;
+    }
+    
+    .time-slots {
+        gap: 100px;
+    }
+}

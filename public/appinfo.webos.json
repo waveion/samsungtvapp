@@ -1,0 +1,11 @@
+{
+  "id": "com.panmetro.app",
+  "version": "1.0.8",
+  "vendor": "PAN METRO CONVERGENCE",
+  "type": "web",
+  "title": "PAN METRO CONVERGENCE",
+  "main": "https://demo.caastv.com",
+  "icon": "icon.png"
+}
+
+

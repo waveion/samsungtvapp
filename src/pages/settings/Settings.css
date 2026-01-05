@@ -1,0 +1,643 @@
+/* Settings Container */
+.settings-container {
+    min-height: 100vh;
+    background: #14161A;
+    color: white;
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
+    flex: 1;
+}
+
+/* Settings Header */
+.settings-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.back-btn {
+    background: transparent;
+    color: #cccccc;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: white;
+}
+
+.settings-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(135deg, #00d4ff, #0099cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 1;
+}
+
+/* Settings Content */
+.settings-content {
+    max-width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Center panel like Kotlin design */
+.settings-panel {
+    width: clamp(700px, 72vw, 1400px);
+    height: clamp(480px, 60vh, 700px);
+    margin: 12vh auto 0;
+    background: #364154;
+    border-radius: 8px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* New settings grid */
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    width: 100%;
+}
+
+.settings-card {
+    background: #2A2D32;
+    border: 5px solid transparent;
+    border-radius: 8px;
+    height: 260px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.settings-card:focus,
+.settings-card:hover {
+    outline: none;
+    border-color: #49FEDD;
+}
+
+.settings-card-icon {
+    font-size: 64px;
+}
+
+.settings-card-icon-img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+}
+
+.settings-card-title {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.settings-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.settings-modal-content {
+    background: #ffffff;
+    color: #000000;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px; /* less wide */
+    padding: 32px;
+    height: 55vh; /* reduced vertical height */
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+}
+.settings-modal-title {
+    font-size: 32px;
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+/* TV responsive scaling */
+@media (min-width: 1280px) {
+    .settings-panel {
+        width: 1100px;
+        height: 600px;
+        margin-top: 17vh;
+    }
+    .settings-card {
+        height: 300px;
+    }
+    .settings-card-icon {
+        font-size: 72px;
+    }
+    .settings-card-icon-img {
+        width: 88px;
+        height: 88px;
+    }
+    .settings-card-title {
+        font-size: 22px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .settings-panel {
+        width: 1400px;
+        height: 720px;
+        margin-top: 18vh;
+    }
+    .settings-card {
+        height: 360px;
+    }
+    .settings-card-icon {
+        font-size: 80px;
+    }
+    .settings-card-icon-img {
+        width: 104px;
+        height: 104px;
+    }
+    .settings-card-title {
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 2560px) {
+    .settings-panel {
+        width: 1700px;
+        height: 840px;
+        margin-top: 20vh;
+    }
+    .settings-card {
+        height: 420px;
+    }
+    .settings-card-icon {
+        font-size: 90px;
+    }
+    .settings-card-icon-img {
+        width: 120px;
+        height: 120px;
+    }
+    .settings-card-title {
+        font-size: 26px;
+    }
+}
+
+.settings-info-grid {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 1fr;   /* single column rows */
+    gap: 10px;                    /* tighter spacing between rows */
+    flex: 1 1 auto;          /* take up available height */
+    overflow-y: auto;         /* scroll if content exceeds */
+    padding-right: 8px;       /* room for scrollbar */
+}
+
+/* Increase base font size for modal info content */
+.settings-info-row span {
+    font-size: 19px;
+    line-height: 1.4;
+}
+
+.settings-info-row {
+    display: flex;
+    flex-direction: row;      /* label and value side-by-side */
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.settings-info-row span:first-child {
+    color: #000;              /* same color as value */
+    font-weight: 500;         /* uniform weight */
+    font-size: 21px;          /* same size as value */
+}
+
+.settings-info-row span:last-child {
+    color: #000;
+    font-size: 21px;
+    margin-left: auto;         /* push value to the right */
+    word-break: break-word;
+}
+
+.settings-modal-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;   /* center the back button */
+    align-items: center;
+    margin-top: 20px;
+    flex: 0 0 auto;           /* keep actions pinned at bottom */
+}
+
+.settings-modal-button {
+    background: #5CAD5C;
+    color: #fff;
+    border: none;
+    padding: 14px 28px;       /* slightly larger */
+    border-radius: 10px;
+    font-size: 20px;          /* slightly larger */
+    min-width: 220px;
+    min-height: 48px;
+    cursor: pointer;
+}
+
+@media (min-width: 1280px) {
+    .settings-modal-content {
+        max-width: 780px; /* less wide on big screens */
+        padding: 40px;
+        height: 60vh;
+    }
+    .settings-modal-title {
+        font-size: 36px;
+    }
+    .settings-info-grid {
+        gap: 12px;
+    }
+    .settings-info-row span:first-child,
+    .settings-info-row span:last-child {
+        font-size: 23px;      /* same size for label and value */
+    }
+    .settings-modal-button {
+        font-size: 22px;
+        padding: 16px 32px;
+        min-width: 260px;
+        min-height: 54px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .settings-modal-content {
+        max-width: 920px; /* less wide on very large screens */
+        padding: 48px;
+        height: 65vh;
+    }
+    .settings-modal-title {
+        font-size: 40px;
+    }
+    .settings-info-grid {
+        gap: 14px;
+    }
+    .settings-info-row span:first-child,
+    .settings-info-row span:last-child {
+        font-size: 25px;      /* same size for label and value */
+    }
+    .settings-modal-button {
+        font-size: 24px;
+        padding: 18px 36px;
+        min-width: 300px;
+        min-height: 60px;
+    }
+}
+
+/* Settings Section */
+.settings-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    color: white;
+}
+
+/* Subscription Section */
+.subscription-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.current-plan {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.plan-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #00d4ff;
+}
+
+.next-payment {
+    font-size: 0.9rem;
+    color: #cccccc;
+}
+
+.plan-details {
+    color: #888888;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+.subscription-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.upgrade-btn {
+    background: linear-gradient(135deg, #00d4ff, #0099cc);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.upgrade-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Account Details Section */
+.account-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mobile-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.mobile-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.mobile-label span:first-child {
+    font-size: 0.9rem;
+    color: white;
+    font-weight: 500;
+}
+
+.mobile-number {
+    font-size: 1rem;
+    color: #cccccc;
+}
+
+.update-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.update-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Devices Section */
+.devices-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.device-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.device-column h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 1rem 0;
+}
+
+.other-devices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.device-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.device-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.device-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.device-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 8px;
+}
+
+.device-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.device-type {
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+}
+
+.last-used {
+    font-size: 0.8rem;
+    color: #cccccc;
+}
+
+.logout-device-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logout-device-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.no-devices {
+    text-align: center;
+    padding: 2rem;
+    color: #888888;
+    font-style: italic;
+}
+
+.no-devices p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .settings-container {
+        padding: 1rem;
+    }
+
+    .settings-header {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .settings-header h1 {
+        font-size: 1.5rem;
+        min-width: 0;
+    }
+
+    .settings-section {
+        padding: 1.5rem;
+    }
+
+    .subscription-actions {
+        flex-direction: column;
+    }
+
+    .upgrade-btn,
+    .secondary-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .mobile-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .update-btn {
+        align-self: flex-end;
+    }
+
+    .devices-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .device-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .logout-device-btn {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .settings-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .settings-section {
+        padding: 1rem;
+    }
+
+    .plan-name {
+        font-size: 1.1rem;
+    }
+
+    .device-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+    }
+} 

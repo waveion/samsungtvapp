@@ -1,0 +1,25 @@
+.scroll-overlay-container {
+  box-sizing: border-box;
+  padding: 6px 12px;
+}
+
+.scroll-overlay-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 48px;
+  white-space: nowrap;
+  will-change: transform;
+  animation-name: caa-scroll-left;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.scroll-overlay-item { display: inline-block; }
+
+@keyframes caa-scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(var(--caa-distance, -100%)); }
+}
+
+

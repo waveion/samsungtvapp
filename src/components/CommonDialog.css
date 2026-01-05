@@ -1,0 +1,120 @@
+.cd-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  overflow: auto;
+}
+
+/* Inline overlay mode: confines the overlay to the nearest positioned ancestor */
+.cd-overlay-inline {
+  position: absolute;
+  inset: 0;
+}
+
+/* Compact mode for smaller dialogs */
+.cd-overlay-compact .cd-surface-compact {
+  min-width: 200px;
+  max-width: 320px;
+  width: min(80vw, 320px);
+  max-height: 70vh;
+}
+
+.cd-overlay-compact .cd-body {
+  padding: 16px;
+}
+
+.cd-overlay-compact .cd-title {
+  font-size: 20px;
+}
+
+.cd-overlay-compact .cd-title-icon { width: 18px; height: 18px; margin-right: 6px; }
+
+.cd-overlay-compact .cd-message {
+  font-size: 16px;
+}
+
+.cd-overlay-compact .cd-error {
+  font-size: 18px;
+}
+
+.cd-overlay-compact .cd-btn {
+  min-width: 70px;
+  min-height: 40px;
+  padding: 10px 18px;
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.cd-overlay-compact .cd-gap-sm { height: 20px; }
+.cd-overlay-compact .cd-gap-md { height: 40px; }
+.cd-overlay-compact .cd-gap-lg { height: 16px; }
+
+.cd-surface {
+  background: #191B1F;
+  border: 1px solid #5a6676; /* overridden via inline style */
+  border-radius: 16px;
+  min-width: 260px;
+  max-width: 560px;              /* narrower */
+  width: min(88vw, 560px);        /* responsive narrower width */
+  height: auto;                   /* dynamic height */
+  max-height: 85vh;               /* prevent overflow on very small screens */
+  box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+}
+
+.cd-body { padding: 20px; }
+
+.cd-title-row { display: flex; align-items: center; justify-content: center; }
+.cd-title-icon { width: 32px; height: 32px; margin-right: 10px; }
+.cd-default-icon { display: inline-flex; align-items: center; justify-content: center; background: #414857; color: #fff; border-radius: 999px; font-weight: 800; font-size: 16px; }
+.cd-title { margin: 0; color: #fff; font-size: 28px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.cd-message { margin: 0; color: #fff; font-size: 22px; text-align: center; }
+.cd-message-wide { width: 100%; }
+.cd-error { margin: 0; color: #fff; font-size: 26px; text-align: center; opacity: .9; }
+
+.cd-actions { display: flex; align-items: center; justify-content: center; }
+.cd-btn { min-width: 88px; min-height: 54px; border-radius: 8px; border: 1px solid transparent; background: #414857; color: #fff; padding: 14px 24px; margin: 0 14px; cursor: pointer; font-size: 20px; transition: background .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.cd-btn:focus { outline: none; border-color: #49FEDD; box-shadow: 0 0 0 2px rgba(73,254,221,0.35); background: rgba(73, 254, 221, 0.12); }
+.cd-btn:focus-visible { outline: none; }
+.cd-btn-text { background: #414857; }
+
+.cd-gap-sm { height: 32px; }
+.cd-gap_md_old_do_not_use { height: 20px; }
+.cd-gap-md { height: 72px; }
+.cd-gap-lg { height: 22px; }
+
+/* Responsive sizes */
+@media (min-width: 1366px) {
+  .cd-surface { max-width: 600px; width: min(60vw, 600px); }
+  .cd-body { padding: 22px; }
+}
+
+@media (min-width: 1920px) {
+  .cd-surface { max-width: 640px; width: min(45vw, 640px); }
+  .cd-title { font-size: 32px; }
+  .cd-message { font-size: 24px; }
+  .cd-error { font-size: 28px; }
+  .cd-btn { min-height: 60px; padding: 16px 26px; font-size: 22px; min-width: 104px; }
+  .cd-gap-sm { height: 40px; }
+  .cd-gap-md { height: 96px; }
+}
+
+@media (min-width: 2560px) {
+  .cd-surface { max-width: 680px; width: min(40vw, 680px); }
+  .cd-body { padding: 24px; }
+  .cd-title { font-size: 36px; }
+  .cd-message { font-size: 26px; }
+  .cd-error { font-size: 30px; }
+  .cd-btn { font-size: 24px; min-height: 66px; padding: 18px 30px; min-width: 118px; }
+  .cd-gap-sm { height: 48px; }
+  .cd-gap-md { height: 112px; }
+}
+
+

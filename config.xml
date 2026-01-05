@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://panmetroconvergence.com/PanMetroApp" version="1.0.0">
+    <tizen:application id="BtRWLGTTAm.PanMetroApp" package="BtRWLGTTAm" required_version="5.5"/>
+    <content src="index.html"/>
+    <name>PanMetroApp</name>
+    <icon src="icon.png"/>
+    <tizen:profile name="tv"/>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+    <tizen:setting screen-orientation="landscape" hwkey-event="enable"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+</widget>

@@ -1,0 +1,47 @@
+.push-overlay {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 24px;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 220ms ease, transform 220ms ease;
+    z-index: 9999;
+}
+
+.push-overlay.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.push-content {
+    max-width: min(90vw, 1200px);
+    background: rgba(20, 22, 26, 0.92);
+    color: #ffffff;
+    border: 2px solid #49FEDD;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 18px;
+    line-height: 1.4;
+    text-align: center;
+    pointer-events: auto;
+}
+
+@media (min-width: 1280px) {
+    .push-content {
+        font-size: 20px;
+        padding: 16px 22px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .push-content {
+        font-size: 22px;
+        padding: 18px 26px;
+    }
+}
+
+

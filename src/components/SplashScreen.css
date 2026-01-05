@@ -1,0 +1,73 @@
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-logo {
+  width: 1000px;
+  height: 1000px;
+  object-fit: contain;
+}
+
+.splash-progress {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px; /* slightly bigger than 300 */
+}
+
+.splash-progress-track {
+  width: 100%;
+  height: 6px; /* slightly bigger than 3 */
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.splash-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #00BFFF; /* match Kotlin example color tone */
+  transition: width 120ms linear;
+}
+
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .splash-logo {
+    width: 950px;
+    height: 950px;
+  }
+  .splash-progress {
+    width: 340px;
+    bottom: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .splash-logo {
+    width: 950px;
+    height: 950px;
+  }
+  .splash-progress {
+    width: 320px;
+    bottom: 50px;
+  }
+}

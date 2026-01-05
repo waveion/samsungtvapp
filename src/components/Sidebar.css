@@ -1,0 +1,226 @@
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  /* Solid-ish sidebar body; the soft edge is created by sidebar-gradient-overlay */
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  width: 80px;
+  transition: width 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Overlay that extends the gradient into the main content area
+   to avoid a sharp vertical edge where the sidebar ends */
+.sidebar-gradient-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  /* Cover well beyond the expanded sidebar width so the edge fades smoothly */
+  width: 40vw;
+  pointer-events: none; /* don't block clicks / focus in content */
+  z-index: 900; /* below the actual sidebar (1000), above content */
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  /* Dark near the sidebar, then medium, then very light towards the content */
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.75) 20%,
+    rgba(0, 0, 0, 0.45) 40%,
+    rgba(0, 0, 0, 0.25) 65%,
+    rgba(0, 0, 0, 0.0) 100%
+  );
+}
+
+.sidebar-gradient-overlay.visible {
+  opacity: 1;
+}
+
+.sidebar.expanded {
+  width: 240px;
+}
+
+.sidebar-header {
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid rgba(42, 42, 42, 0.3);
+}
+
+.logo-collapsed {
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+}
+
+.logo-collapsed img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: 40px;
+  max-height: 40px;
+}
+
+.logo-expanded {
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 35px;
+}
+
+.logo-expanded img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: 150px;
+  max-height: 60px;
+}
+
+.sidebar-nav {
+  padding: 16px 0 16px 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-spacer { height: 130px; flex: 0 0 130px; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+  white-space: nowrap;
+  outline: none;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: rgba(73, 254, 221, 0.2); /* base color tint */
+  color: #49FEDD; /* base color */
+  font-weight: 600;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.nav-label {
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.sidebar.expanded .nav-label {
+  opacity: 1;
+  transform: translateX(0);
+  font-size: 24px; /* larger text when expanded */
+  font-weight: 700;
+}
+
+.sidebar:not(.expanded) .nav-label {
+  display: none;  /* fully remove labels when collapsed */
+}
+
+.logout-button {
+  margin-top: auto;
+  margin-bottom: 1.5rem;
+  border-top: 1px solid rgba(42, 42, 42, 0.3);
+  color: #ff6b6b !important;
+  background: transparent !important;
+}
+
+.logout-button:hover {
+  background: rgba(255, 107, 107, 0.1) !important;
+  color: #ff6b6b !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+  }
+  
+  .sidebar.expanded {
+    width: 220px;
+  }
+  
+  .nav-item {
+    padding: 14px 16px;
+  }
+  
+  .nav-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+  }
+  
+  .nav-label {
+    font-size: 15px;
+  }
+} 
+
+.sidebar:focus {
+  outline-offset: -2px; /* keep magenta border inside */
+}
+
+/* Enhanced focus styling for better visibility */
+.sidebar.expanded .nav-item.focused {
+  background: rgba(255, 255, 255, 0.2) !important; /* light surface like Kotlin */
+  color: #49FEDD !important; /* base color */
+  font-weight: 600;
+  border: 2px solid #49FEDD; /* outline instead of left bar */
+  border-radius: 4px;
+}
+
+.sidebar.expanded .nav-item:focus {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #49FEDD !important;
+  font-weight: 600;
+  border: 2px solid #49FEDD;
+  border-radius: 4px;
+}
+
+/* minimal styling for on-screen logs */
+.log-panel {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 12px;
+  color: #0f0;
+  background: rgba(0,0,0,0.5);
+  padding: 4px;
+}
+
+.log-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

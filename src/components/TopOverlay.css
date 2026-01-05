@@ -1,0 +1,48 @@
+.top-overlay-root {
+  position: absolute;
+  top: clamp(8px, 2vh, 32px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: clamp(10px, 2vw, 28px);
+  background: rgba(0,0,0,0.8);
+  border-radius: clamp(8px, 1.2vw, 16px);
+  padding: clamp(6px, 1vw, 14px) clamp(10px, 1.6vw, 20px);
+  align-items: center;
+  z-index: 5;
+}
+
+.top-overlay-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 0.7vw, 10px);
+  width: clamp(64px, 6.5vw, 100px);
+  height: clamp(64px, 6.5vw, 100px);
+  border-radius: 50%;
+  background: transparent;
+  border: clamp(2px, 0.25vw, 3px) solid transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.top-overlay-btn:focus-visible,
+.top-overlay-btn:hover {
+  border-color: #26d7d2;
+  background: rgba(38,215,210,0.2);
+  outline: none;
+}
+
+.top-overlay-label {
+  font-size: clamp(9px, 1vw, 16px);
+  line-height: 1;
+}
+
+/* Responsive icon sizing for FeatherIcon SVGs */
+.top-overlay-btn svg {
+  width: clamp(24px, 3.2vw, 48px);
+  height: clamp(24px, 3.2vw, 48px);
+}
+
+

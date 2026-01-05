@@ -1,0 +1,1205 @@
+/* Login Page Styles */
+body {
+    margin: 0;
+    padding: 0;
+    display: block;
+    place-items: initial;
+    min-height: 100vh;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+#root {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    text-align: initial;
+    width: 100%;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+.login-container {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(180deg, rgba(18, 20, 23, 1) 70%, rgba(95, 117, 132, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    flex: 1;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.login-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.login-header p {
+    font-size: 1.1rem;
+    color: #cccccc;
+    margin: 0;
+}
+
+.login-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    width: calc(100% - 4rem);
+    max-width: 1200px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 3rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 2rem;
+    box-sizing: border-box;
+}
+
+/* QR Code Section */
+.qr-section {
+    flex: 1;
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.qr-section h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: white;
+    margin-top: 0;
+}
+
+.qr-section p {
+    font-size: 1.2rem;
+    color: #cccccc;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.qr-code-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-code {
+    width: 300px;
+    height: 300px;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.qr-code::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00d4ff, #0099cc, #0066ff);
+    border-radius: 15px;
+    z-index: -1;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    }
+    to {
+        box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+    }
+}
+
+.qr-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-pattern {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-pattern img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.qr-cell {
+    background: #f0f0f0;
+    border-radius: 2px;
+}
+
+.qr-cell.qr-black {
+    background: #000;
+}
+
+/* Divider-Top */
+.divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.divider-line-top {
+    width: 2px;
+    height: 220px;
+    background: linear-gradient(to bottom, transparent, #00d4ff);
+    position: relative;
+}
+
+.divider-line-top::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #00d4ff;
+    border-radius: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+}
+
+
+.divider-line-top::after {
+    bottom: -4px;
+}
+
+.divider-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+/* Divider-Bottom */
+.divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.divider-line-bottom {
+    width: 2px;
+    height: 220px;
+    background: linear-gradient(to bottom, #00d4ff, transparent);
+    position: relative;
+}
+
+.divider-line-bottom::before{
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #00d4ff;
+    border-radius: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+}
+
+.divider-line-bottom::before {
+    top: -4px;
+}
+
+/* User Login Section */
+.user-login-section {
+    flex: 1;
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+
+.user-login-section h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: white;
+    margin-top: 0;
+}
+
+.user-login-section p {
+    font-size: 1.2rem;
+    color: #cccccc;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.user-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 300px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.user-login-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+}
+
+.user-login-form .form-group label {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.user-login-form .form-group input {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.user-login-form .form-group input::placeholder {
+    color: #cccccc;
+}
+
+.user-login-form .form-group input:focus {
+    border-color: #49FEDD;
+    box-shadow: 0 0 15px rgba(73, 254, 221, 0.3);
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.signup-btn {
+    flex: 1;
+    padding: 1rem;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.signup-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.login-btn {
+    flex: 1;
+    padding: 1rem;
+    background: linear-gradient(135deg, #00d4ff, #0099cc);
+    border: none;
+    color: white;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+.user-login-btn {
+    background: linear-gradient(135deg, #00d4ff, #0099cc);
+    color: white;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.user-login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+.user-login-btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile Section */
+.mobile-section {
+    flex: 1;
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.mobile-input-container {
+    margin-bottom: 2rem;
+}
+
+.mobile-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.mobile-input::placeholder {
+    color: #cccccc;
+}
+
+.mobile-input:focus {
+    border-color: #49FEDD;
+    box-shadow: 0 0 15px rgba(73, 254, 221, 0.3);
+}
+
+/* Keypad */
+.keypad {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.keypad-row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.keypad button {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.keypad button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #00d4ff;
+    transform: translateY(-2px);
+}
+
+.keypad button:active {
+    transform: translateY(0);
+}
+
+/* Send OTP Button */
+.send-otp-btn {
+    background: linear-gradient(135deg, #00d4ff, #0099cc);
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.send-otp-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+.send-otp-btn:active {
+    transform: translateY(0);
+}
+
+/* User Login Link */
+.user-login-link {
+    background: transparent;
+    color: #00d4ff;
+    border: 2px solid #00d4ff;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.user-login-link:hover {
+    background: #00d4ff;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background: linear-gradient(180deg, rgba(18, 20, 23, 1) 70%, rgba(95, 117, 132, 1) 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    animation: modalSlideIn 0.3s ease-out;
+    box-sizing: border-box;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header h2 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    color: #cccccc;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-group input {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: #cccccc;
+}
+
+.form-group input:focus {
+    border-color: #49FEDD;
+    box-shadow: 0 0 15px rgba(73, 254, 221, 0.3);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.modal-cancel {
+    flex: 1;
+    padding: 1rem;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-cancel:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.modal-submit {
+    flex: 1;
+    padding: 1rem;
+    background: linear-gradient(135deg, #00d4ff, #0099cc);
+    border: none;
+    color: white;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.modal-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+/* Tablet Design */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .login-content {
+        max-width: 900px;
+        padding: 2.5rem;
+        gap: 2.5rem;
+    }
+    
+    .qr-code {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .keypad button {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .mobile-input {
+        max-width: 320px;
+    }
+}
+
+/* Mobile Design */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 1rem;
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    
+    .login-header {
+        margin-bottom: 2rem;
+    }
+    
+    .login-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .login-header p {
+        font-size: 1rem;
+    }
+    
+    .login-content {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem;
+        margin: 0;
+        height: auto;
+        min-height: auto;
+        max-width: 100%;
+        width: calc(100% - 2rem);
+    }
+    
+    .qr-section {
+        padding: 1rem;
+    }
+    
+    .qr-section h3 {
+        font-size: 1.5rem;
+    }
+    
+    .qr-section p {
+        font-size: 1rem;
+    }
+    
+    .qr-code {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .user-login-section {
+        padding: 1rem;
+    }
+    
+    .user-login-section h3 {
+        font-size: 1.5rem;
+    }
+    
+    .user-login-section p {
+        font-size: 1rem;
+    }
+    
+    .user-login-form {
+        max-width: 280px;
+    }
+    
+    .user-login-form .form-group input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .form-actions {
+        gap: 0.8rem;
+    }
+    
+    .signup-btn,
+    .login-btn {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .user-login-btn {
+        max-width: 280px;
+        padding: 1rem 2.5rem;
+        font-size: 1rem;
+    }
+    
+    .mobile-section {
+        padding: 1rem;
+    }
+    
+    .mobile-section h3 {
+        font-size: 1.5rem;
+    }
+    
+    .mobile-input {
+        max-width: 280px;
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+    }
+    
+    .keypad {
+        max-width: 280px;
+        gap: 0.4rem;
+        width: 100%;
+    }
+    
+    .keypad button {
+        width: 55px;
+        height: 55px;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+    
+    .send-otp-btn {
+        padding: 0.8rem 2.5rem;
+        font-size: 1rem;
+    }
+    
+    .divider {
+        flex-direction: row;
+        gap: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .divider-line-top {
+        width: 80px;
+        height: 2px;
+    }
+    
+    .divider-line-top::after {
+        width: 6px;
+        height: 6px;
+        top: 50%;
+        left: auto;
+        transform: translateY(-50%);
+        right: -3px;
+    }
+
+    .divider-line-bottom {
+        width: 80px;
+        height: 2px;
+    }
+    
+    .divider-line-bottom::before{
+        width: 6px;
+        height: 6px;
+        top: 50%;
+        left: auto;
+        transform: translateY(-50%);
+        left: -3px;
+    }
+    
+    .divider-text {
+        font-size: 1rem;
+        padding: 0.3rem 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 0.5rem;
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    
+    .login-header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .login-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .login-header p {
+        font-size: 0.9rem;
+    }
+    
+    .login-content {
+        padding: 1.5rem;
+        margin: 0;
+        gap: 1.5rem;
+        min-height: auto;
+        width: calc(100% - 1rem);
+    }
+    
+    .qr-section {
+        padding: 0.5rem;
+    }
+    
+    .qr-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .qr-section p {
+        font-size: 0.9rem;
+    }
+    
+    .qr-code {
+        width: 150px;
+        height: 150px;
+        padding: 15px;
+    }
+    
+    .user-login-section {
+        padding: 0.5rem;
+    }
+    
+    .user-login-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .user-login-section p {
+        font-size: 0.9rem;
+    }
+    
+    .user-login-form {
+        max-width: 250px;
+    }
+    
+    .user-login-form .form-group input {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+    
+    .form-actions {
+        gap: 0.6rem;
+    }
+    
+    .signup-btn,
+    .login-btn {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+    
+    .user-login-btn {
+        max-width: 250px;
+        padding: 0.8rem 2rem;
+        font-size: 0.9rem;
+    }
+    
+    .mobile-section {
+        padding: 0.5rem;
+    }
+    
+    .mobile-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .mobile-input {
+        max-width: 250px;
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .keypad {
+        max-width: 250px;
+        gap: 0.3rem;
+        width: 100%;
+    }
+    
+    .keypad button {
+        width: 45px;
+        height: 45px;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+    
+    .send-otp-btn {
+        padding: 0.7rem 2rem;
+        font-size: 0.9rem;
+    }
+    
+    .divider {
+        gap: 0.8rem;
+        margin: 0.8rem 0;
+    }
+    
+    .divider-line-top {
+        width: 60px;
+    }
+    
+    .divider-line-bottom {
+        width: 60px;
+    }
+    
+    .divider-text {
+        font-size: 0.9rem;
+        padding: 0.2rem 0.6rem;
+    }
+    
+    /* Modal responsive styles */
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    .form-group input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .modal-cancel,
+    .modal-submit {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* OTP Validation Styles */
+.otp-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.otp-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.otp-header p {
+    font-size: 1.1rem;
+    color: #cccccc;
+    margin: 0;
+}
+
+.otp-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: calc(100% - 4rem);
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 3rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 2rem;
+    box-sizing: border-box;
+}
+
+.otp-input-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.otp-input {
+    width: 60px;
+    height: 60px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+    transition: all 0.3s ease;
+    caret-color: transparent;
+}
+
+.otp-input.active {
+    border-color: #00d4ff;
+    background: rgba(0, 212, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+}
+
+.otp-input:focus {
+    border-color: #49FEDD;
+    background: rgba(73, 254, 221, 0.1);
+    box-shadow: 0 0 15px rgba(73, 254, 221, 0.3);
+}
+
+.resend-container {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.resend-timer {
+    color: #cccccc;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.timer-highlight {
+    color: #00d4ff;
+    font-weight: 600;
+}
+
+.resend-btn {
+    background: transparent;
+    color: #00d4ff;
+    border: 2px solid #00d4ff;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.resend-btn:hover {
+    background: #00d4ff;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.back-btn {
+    background: transparent;
+    color: #cccccc;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: white;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #00d4ff, #0099cc) !important;
+    border-color: #00d4ff !important;
+    color: white !important;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+/* OTP Responsive Design */
+@media (max-width: 768px) {
+    .otp-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .otp-header p {
+        font-size: 1rem;
+    }
+    
+    .otp-content {
+        padding: 2rem;
+        margin: 0;
+        width: calc(100% - 2rem);
+        gap: 1.5rem;
+    }
+    
+    .otp-input-container {
+        gap: 0.8rem;
+    }
+    
+    .otp-input {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .keypad button {
+        width: 55px;
+        height: 55px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .otp-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .otp-header p {
+        font-size: 0.9rem;
+    }
+    
+    .otp-content {
+        padding: 1.5rem;
+        margin: 0;
+        width: calc(100% - 1rem);
+        gap: 1rem;
+    }
+    
+    .otp-input-container {
+        gap: 0.5rem;
+    }
+    
+    .otp-input {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+    
+    .keypad button {
+        width: 45px;
+        height: 45px;
+        font-size: 0.9rem;
+    }
+    
+    .resend-btn,
+    .back-btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+    }
+} 
